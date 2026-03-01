@@ -43,6 +43,21 @@ api:
  	       --go-grpc_out=paths=source_relative:./api \
 	       --openapi_out=fq_schema_naming=true,default_response=false:. \
 	       $(API_PROTO_FILES)
+.PHONY: validate
+# generate validate proto
+validate:
+	protoc --proto_path=. \
+           --proto_path=./third_party \
+           --go_out=paths=source_relative:. \
+           --validate_out=paths=source_relative,lang=go:. \
+           $(API_PROTO_FILES)
+.PHONY: errors
+errors:
+	protoc --proto_path=. \
+           --proto_path=./third_party \
+           --go_out=paths=source_relative:. \
+           --go-errors_out=paths=source_relative:. \
+           $(API_PROTO_FILES)
 
 .PHONY: build
 # build
@@ -52,15 +67,16 @@ build:
 .PHONY: generate
 # generate
 generate:
-	go generate ./...
 	go mod tidy
+	go get github.com/google/wire/cmd/wire@latest
+	go generate ./...
 
 .PHONY: all
 # generate all
 all:
-	make api
-	make config
-	make generate
+	make api;
+	make config;
+	make generate;
 
 # show help
 help:

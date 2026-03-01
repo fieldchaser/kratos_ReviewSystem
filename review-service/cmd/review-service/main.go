@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"os"
+	"review-service/pkg/snowflake"
 
 	"review-service/internal/conf"
 
@@ -79,6 +80,11 @@ func main() {
 		panic(err)
 	}
 	defer cleanup()
+
+	// 初始化snowflake
+	if err := snowflake.Init(bc.Snowflake.StartTime, bc.Snowflake.MachineId); err != nil {
+		panic(err)
+	}
 
 	// start and wait for stop signal
 	if err := app.Run(); err != nil {

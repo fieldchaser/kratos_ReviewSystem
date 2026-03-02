@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.1
 // - protoc             v5.29.3
-// source: api/review/v1/review.proto
+// source: review/v1/review.proto
 
 package v1
 
@@ -363,5 +363,5 @@ var Review_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/review/v1/review.proto",
+	Metadata: "review/v1/review.proto",
 }
